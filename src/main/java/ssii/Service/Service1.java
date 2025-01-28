@@ -6,6 +6,7 @@ import ssii.dao.ParticipationRepository;
 import ssii.dao.PersonneRepository;
 import ssii.dao.ProjetRepository;
 import ssii.entity.Participation;
+import ssii.entity.Projet;
 
 public class Service1 {
     private final PersonneRepository personneDao;
@@ -26,8 +27,24 @@ public class Service1 {
         // On vérifie que le projet existe
         var projet = projetDao.findById(projetCode).orElseThrow();
 
+        var nbProjet = personne.getParticipations().size();
+        var tauxParticipation = participationDao.tauxParticapationpourX(personneMatricule);
 
-        return null;
+        int i=0;
+        for(Participation p: personne.getParticipations()){
+            if (p.getAffectation().getCode().equals( projetCode)){
+                i=1;
+                break;
+            }
+        }
+
+        if (i!=0 || 3<=nbProjet || 100<(pourcentage+tauxParticipation)) {
+            throw new IllegalStateException ();
+        }
+
+        var participation = new Participation(personne, projet, role, pourcentage);
+        participationDao.save(participation);
+        return participation;
     }
 
 }

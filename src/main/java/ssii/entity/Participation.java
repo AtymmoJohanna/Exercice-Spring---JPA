@@ -3,11 +3,13 @@ package ssii.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
+@NoArgsConstructor @RequiredArgsConstructor
+@ToString
+@Getter
 @Entity
+
 public class Participation {
 
     @Id
@@ -37,6 +39,7 @@ public class Participation {
     @NonNull
     @PositiveOrZero(message = "La quantité ne peut pas être négative")
     private Float pourcentage;
+
 
 
 }
